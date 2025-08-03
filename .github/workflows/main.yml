@@ -11,6 +11,12 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Install Nix
-        run: sudo sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
+        run: sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
       - name: Build
         run: nix build github:nvmd/nixos-raspberrypi#installerImages.rpi5
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: ./*
