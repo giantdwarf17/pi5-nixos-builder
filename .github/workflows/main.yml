@@ -11,7 +11,9 @@ jobs:
     steps:
       # Runs a single command using the runners shell
       - name: Install Nix
-        run: sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
+        run: sudo install -d -m755 -o $(id -u) -g $(id -g) /nix \
+          curl -L https://nixos.org/nix/install | sh \
+          source $HOME/.nix-profile/etc/profile.d/nix.sh
       - name: Build
         run: nix build github:nvmd/nixos-raspberrypi#installerImages.rpi5
       - name: Upload a Build Artifact
