@@ -13,7 +13,13 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
             
-      - name: Build
+      - name: Set channel to unstable
+        run: nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+
+      - name: Update channels
+        run: nix-channel --update
+        
+      - name: Build Pi 5 image
         run: nix build github:nvmd/nixos-raspberrypi#installerImages.rpi5
           
       - name: Upload a Build Artifact
